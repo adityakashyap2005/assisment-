@@ -89,7 +89,7 @@ const Login = () => {
         
         <div>
           <span className="text-muted" style={{ fontSize: '14px' }}>Don't have an account? </span>
-          <Link to="/signup" style={{ color: 'var(--secondary)', textDecoration: 'none', fontWeight: 600, fontSize: '14px' }}>Sign Up for TaskFlow</Link>
+          <Link to="/signup" style={{ color: 'var(--secondary)', textDecoration: 'none', fontWeight: 600, fontSize: '14px' }}>Sign Up for Aethera</Link>
         </div>
       </div>
     </div>

@@ -69,7 +69,7 @@ const AdminOps = () => {
         {/* Top Navbar */}
         <header style={{ padding: '24px 40px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid rgba(255,255,255,0.02)' }}>
           <div style={{ display: 'flex', gap: '40px', alignItems: 'center' }}>
-            <h2 style={{ margin: 0, fontWeight: 800, fontSize: '20px', letterSpacing: '-0.02em', color: '#fff' }}>TaskFlow</h2>
+            <h2 style={{ margin: 0, fontWeight: 800, fontSize: '20px', letterSpacing: '-0.02em', color: '#fff' }}>Aethera</h2>
             <nav style={{ display: 'flex', gap: '24px', fontSize: '14px', fontWeight: 500 }}>
               <span style={{ color: 'var(--outline)', cursor: 'pointer' }}>Overview</span>
               <span style={{ color: '#fff', borderBottom: '2px solid var(--primary)', paddingBottom: '4px', cursor: 'pointer' }}>Command Center</span>

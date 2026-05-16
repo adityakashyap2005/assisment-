@@ -60,7 +60,7 @@ const Sidebar = () => {
     <aside className="sidebar glass-panel" style={{ borderRadius: 0 }}>
       <div className="brand">
         <Shield size={32} color="var(--primary)" />
-        <span>TASKFLOW</span>
+        <span>AETHERA</span>
       </div>
       
       <nav className="nav-menu">

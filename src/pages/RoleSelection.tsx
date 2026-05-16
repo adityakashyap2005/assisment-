@@ -7,7 +7,7 @@ const RoleSelection = () => {
     <div className="page-center">
       <div className="glass-panel edge-glow" style={{ padding: '48px', width: '100%', maxWidth: '800px', display: 'flex', flexDirection: 'column', gap: '40px', alignItems: 'center' }}>
         <div className="text-center">
-          <h2 className="header-title" style={{ fontSize: '32px' }}>Select Your TaskFlow Role</h2>
+          <h2 className="header-title" style={{ fontSize: '32px' }}>Select Your Aethera Role</h2>
           <p className="text-muted" style={{ marginTop: '8px' }}>Choose your operational context for this session.</p>
         </div>
         
