@@ -204,3 +204,24 @@ CREATE POLICY "Users can mark own notifications read" ON notifications
 
 -- Reload the PostgREST schema cache so the API recognizes the new tables immediately
 NOTIFY pgrst, 'reload schema';
+
+-- Global Admins can manage all tasks in all projects
+CREATE POLICY "Global admins can manage all tasks" ON tasks
+  FOR ALL
+  USING (
+    EXISTS (
+      SELECT 1 FROM profiles 
+      WHERE id = auth.uid() 
+      AND role = 'Admin'
+    )
+  );
+
+CREATE POLICY "Global admins can manage all comments" ON task_comments
+  FOR ALL
+  USING (
+    EXISTS (
+      SELECT 1 FROM profiles 
+      WHERE id = auth.uid() 
+      AND role = 'Admin'
+    )
+  );

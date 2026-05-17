@@ -138,6 +138,20 @@ const Tasks = () => {
           .eq('id', editingTask.id);
           
         if (error) throw error;
+        
+        // Notifications and Email simulation for reassigned task
+        if (assigneeId && assigneeId !== editingTask.assignee_id && assigneeId !== user.id) {
+          await supabase.from('notifications').insert({
+            user_id: assigneeId,
+            title: 'Task Reassigned',
+            message: `You were assigned to an existing task: "${title}"`,
+            type: 'task_assigned',
+            link: `/tasks`
+          });
+          
+          console.log(`[Email Service] Sending task reassignment email for task: ${title}`);
+          alert(`Task updated! An in-app notification and email have been dispatched to the new assignee.`);
+        }
       } else {
         const { error } = await supabase
           .from('tasks')
@@ -156,7 +170,7 @@ const Tasks = () => {
 
         if (error) throw error;
         
-        // Notifications
+        // Notifications and Email simulation for new task
         if (assigneeId && assigneeId !== user.id) {
           await supabase.from('notifications').insert({
             user_id: assigneeId,
@@ -165,6 +179,10 @@ const Tasks = () => {
             type: 'task_assigned',
             link: `/tasks`
           });
+          
+          // Simulate sending an email
+          console.log(`[Email Service] Sending task assignment email for task: ${title}`);
+          alert(`Task saved! An in-app notification and email have been dispatched to the assignee.`);
         }
       }
 

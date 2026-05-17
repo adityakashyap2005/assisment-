@@ -15,7 +15,7 @@ const Login = () => {
     setLoading(true);
     setError('');
     
-    const { error } = await supabase.auth.signInWithPassword({
+    const { data, error } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
@@ -26,6 +26,15 @@ const Login = () => {
     } else {
       const isRoleAdmin = window.location.search.includes('role=admin');
       localStorage.setItem('userRole', isRoleAdmin ? 'admin' : 'member');
+      
+      // Sync the database profile role with the frontend selection
+      if (data?.user) {
+        await supabase
+          .from('profiles')
+          .update({ role: isRoleAdmin ? 'Admin' : 'Project Member' })
+          .eq('id', data.user.id);
+      }
+      
       navigate(isRoleAdmin ? '/admin-ops' : '/dashboard');
     }
   };

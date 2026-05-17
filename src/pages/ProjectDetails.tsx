@@ -179,6 +179,16 @@ const ProjectDetails = () => {
         .eq('project_id', selectedProjectId)
         .eq('user_id', userId);
       if (error) throw error;
+      
+      // Send notification to the removed member
+      await supabase.from('notifications').insert({
+        user_id: userId,
+        title: 'Removed from Project',
+        message: `You have been removed from the project: "${selectedProject?.name || 'Unknown'}"`,
+        type: 'member_joined',
+        link: '/workspaces'
+      });
+      
       setMembers(prev => prev.filter(m => m.profile?.id !== userId));
     } catch(e: any) {
       alert(e.message);
@@ -208,6 +218,16 @@ const ProjectDetails = () => {
         role: 'Member'
       });
       if (error) throw error;
+      
+      // Send notification to the newly added member
+      await supabase.from('notifications').insert({
+        user_id: selectedProfileIdToAdd,
+        title: 'Added to Project',
+        message: `You have been added to the project: "${selectedProject?.name || 'Unknown'}"`,
+        type: 'member_joined',
+        link: '/workspaces'
+      });
+      
       setShowAddMemberModal(false);
       const { data: mems } = await supabase
         .from('project_members')

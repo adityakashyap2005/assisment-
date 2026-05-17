@@ -48,13 +48,35 @@ const AdminOps = () => {
     if (!memberName || !memberEmail) return;
     setMemberLoading(true);
     
-    // Simulate user creation since we don't have Supabase Auth Admin privileges in the frontend
-    setTimeout(() => {
-      alert(`Successfully provisioned ${memberName} as ${memberRole}. An invitation email has been sent to ${memberEmail}.`);
+    try {
+      const { data, error } = await supabase.auth.signUp({
+        email: memberEmail,
+        password: 'TaskflowPassword123!',
+        options: {
+          data: {
+            name: memberName
+          }
+        }
+      });
+      
+      if (error) throw error;
+      
+      // Update their role in the profiles table after creation
+      if (data.user) {
+        await supabase
+          .from('profiles')
+          .update({ role: memberRole })
+          .eq('id', data.user.id);
+      }
+      
+      alert(`Successfully added ${memberName} as ${memberRole}. They will now appear in the Team section.`);
       setMemberName('');
       setMemberEmail('');
+    } catch (err: any) {
+      alert(`Error adding team member: ${err.message}`);
+    } finally {
       setMemberLoading(false);
-    }, 1500);
+    }
   };
 
   return (
@@ -198,7 +220,7 @@ const AdminOps = () => {
               </div>
 
               <button disabled={memberLoading} type="submit" style={{ background: 'linear-gradient(to right, #d926b0, #9628e3)', color: '#fff', border: 'none', borderRadius: '999px', padding: '16px', fontSize: '16px', fontWeight: 'bold', display: 'flex', justifyContent: 'center', gap: '8px', alignItems: 'center', marginTop: 'auto', cursor: memberLoading ? 'not-allowed' : 'pointer', opacity: memberLoading ? 0.7 : 1, boxShadow: '0 0 20px rgba(217,38,176,0.3)' }}>
-                <ShieldCheck size={20} /> {memberLoading ? 'Provisioning...' : 'Provision User'}
+                <ShieldCheck size={20} /> {memberLoading ? 'Adding...' : 'Add Team Member'}
               </button>
             </form>
 

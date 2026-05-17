@@ -228,6 +228,8 @@ body {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 40px;
+  position: relative;
+  z-index: 50;
 }
 
 .header-title {
